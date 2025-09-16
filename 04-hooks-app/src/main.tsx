@@ -17,6 +17,7 @@ import { MemoCounter } from "./06-memos/MemoCounter";
 import { InstagromApp } from "./07-useOptimistic/InstagromApp";
 import { ClientInformation } from "./08-use-suspense/ClientInformation";
 import { getUserAction } from "./08-use-suspense/api/get-user.action";
+import { ProfesionalApp } from "./09-useContext/ProfesionalApp";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -32,8 +33,10 @@ createRoot(document.getElementById("root")!).render(
         {/* <MemoHook/> */}
         {/* <MemoCounter/> */}
         {/* <InstagromApp/> */}
-        <Suspense fallback={<div>Cargando</div>}>
+        {/* <Suspense fallback={<div>Cargando</div>}>
             <ClientInformation getUser={getUserAction(1000)} />
-        </Suspense>
+        </Suspense> */}
+
+        <ProfesionalApp/>
     </StrictMode>
 );
