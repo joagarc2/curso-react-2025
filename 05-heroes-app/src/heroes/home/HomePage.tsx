@@ -5,11 +5,23 @@ import { HeroGrid } from "../components/HeroGrid";
 import { useState } from "react";
 import { CustomPagination } from "../../components/custom/CustomPagination";
 import { CustomBreadCrumb } from "../../components/custom/CustomBreadCrumb";
+import { useQuery } from "@tanstack/react-query";
+import { getHeroesByPageAction } from "../actions/get-heroes-by-page.action";
+import { useSearchParams } from "react-router";
 
 export const HomePage = () => {
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [activeTab, setActiveTab] = useState<
     "all" | "favorites" | "heroes" | "villains"
   >("all");
+
+  const {data: heroesResponse} = useQuery({
+    queryKey: ['heroes'],
+    queryFn: () => getHeroesByPageAction(),
+    staleTime: 1000 * 600 * 5,
+  });
 
   return (
     <>
@@ -20,7 +32,7 @@ export const HomePage = () => {
           description="Descubre, explora y administra superheroes y villanos"
         />
 
-        <CustomBreadCrumb />
+        <CustomBreadCrumb currentPage="1"/>
 
         {/* Stats Dashboard */}
         <HeroStats />
@@ -54,7 +66,7 @@ export const HomePage = () => {
           </TabsList>
 
           <TabsContent value="all">
-            <HeroGrid />
+            <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
           <TabsContent value="favorites">
             <h1>Favorites</h1>
